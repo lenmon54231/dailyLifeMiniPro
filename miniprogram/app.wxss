@@ -1,0 +1,657 @@
+/**app.wxss**/
+@import '/iconfont-weapp-icon.wxss';
+
+/* 原始代码 -——------------------------------- */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+button {
+  background: initial;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button::after {
+  border: none;
+}
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.userinfo,
+.uploader,
+.tunnel {
+  margin-top: 40rpx;
+  height: 140rpx;
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: none;
+  border-right: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: all 300ms ease;
+}
+
+.userinfo-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
+
+.userinfo-avatar:after {
+  border: none;
+}
+
+.userinfo-nickname {
+  font-size: 32rpx;
+  color: #007aff;
+  background-color: white;
+  background-size: cover;
+}
+
+.userinfo-nickname::after {
+  border: none;
+}
+
+.uploader,
+.tunnel {
+  height: auto;
+  padding: 0 0 0 40rpx;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.uploader-text,
+.tunnel-text {
+  width: 100%;
+  line-height: 52px;
+  font-size: 34rpx;
+}
+
+.uploader-container {
+  width: 100%;
+  height: 400rpx;
+  padding: 20rpx 20rpx 20rpx 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.uploader-image {
+  width: 100%;
+  height: 360rpx;
+}
+
+.tunnel {
+  padding: 0 0 0 40rpx;
+}
+
+.tunnel-text {
+  position: relative;
+  color: #222;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tunnel-text:first-child {
+  border-top: none;
+}
+
+.tunnel-switch {
+  position: absolute;
+  right: 20rpx;
+  top: -2rpx;
+}
+
+.disable {
+  color: #888;
+}
+
+.service {
+  position: fixed;
+  right: 40rpx;
+  bottom: 40rpx;
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  background: linear-gradient(#007aff, #0063ce);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  transition: all 300ms ease;
+}
+
+.service-button {
+  position: absolute;
+  top: 40rpx;
+}
+
+.service:active {
+  box-shadow: none;
+}
+
+.request-text {
+  padding: 20rpx 0;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  word-break: break-all;
+}
+
+/* 原始代码 -——------------------------------- */
+page,
+html,
+body {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.flex_row_around {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+}
+.flex_row_around > view {
+  flex: 1;
+}
+.flex_row_around_wrap {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+.flex_row_between {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.flex_row_between_end {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.flex_row_start {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex_row_start_wrap {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+.flex_row_start_end {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+.flex_row_end {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+.flex_row_center {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.flex_column_start {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.flex_column_start_start {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.flex_column_center {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.flex_column_around {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+.flex_column_between {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex_column_end {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flex-v-c {
+  display: flex;
+  align-items: center;
+}
+.flex_all {
+  flex: 1;
+}
+.red {
+  color: red;
+}
+.newyear {
+  color: #de0f0a;
+}
+.white {
+  color: white;
+}
+.blue {
+  color: #3a5dde;
+}
+.blakc {
+  color: black;
+}
+.btn-red {
+  width: 340rpx;
+  height: 80rpx;
+  background: linear-gradient(90deg, #de0f0a, #aa261b);
+  box-shadow: 0px 5rpx 10rpx 0px rgba(0, 29, 138, 0.3);
+  border-radius: 10rpx;
+  color: white !important;
+  border-color: white !important;
+  border: 1px solid #de0f0a;
+}
+.btn-blue {
+  width: 340rpx;
+  height: 80rpx;
+  background: linear-gradient(90deg, #6b8cf5, #244dda);
+  box-shadow: 0px 5rpx 10rpx 0px rgba(0, 29, 138, 0.3);
+  border-radius: 10rpx;
+  color: white !important;
+  border-color: white !important;
+  border: 1px solid #244dda;
+}
+.u-hairline-border:after {
+  border: 0 !important;
+}
+.bc_white {
+  background-color: #fff;
+}
+.bc_black {
+  background-color: black;
+}
+.bc_blue {
+  background-color: #708dee;
+}
+.bc_orange {
+  background-color: #ff5b00;
+}
+.bc_grey {
+  background-color: #e5e5e5;
+}
+.margin_t_b_15 {
+  margin-top: 15rpx;
+  margin-bottom: 15rpx;
+}
+.margin_l_r_5 {
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+}
+.margin_l_r_15 {
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+}
+.margin_l_r_25 {
+  margin-left: 25rpx;
+  margin-right: 25rpx;
+}
+.position_ab {
+  position: absolute;
+}
+.position_re {
+  position: relative;
+}
+.position_fix {
+  position: fixed;
+}
+.position_ab_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.mt_5 {
+  margin-top: 5rpx;
+}
+.mt_10 {
+  margin-top: 10rpx;
+}
+.mt_15 {
+  margin-top: 15rpx;
+}
+.mt_25 {
+  margin-top: 25rpx;
+}
+.mt_55 {
+  margin-top: 55rpx;
+}
+.mt_65 {
+  margin-top: 65rpx;
+}
+.mt_85 {
+  margin-top: 85rpx;
+}
+.ml_10 {
+  margin-left: 10rpx;
+}
+.ml_15 {
+  margin-left: 15rpx;
+}
+.ml_25 {
+  margin-left: 25rpx;
+}
+.ml_40 {
+  margin-left: 40rpx;
+}
+.ml_55 {
+  margin-left: 55rpx;
+}
+.mr_15 {
+  margin-right: 15rpx;
+}
+.mr_25 {
+  margin-right: 25rpx;
+}
+.mb_10 {
+  margin-bottom: 10rpx;
+}
+.mb_15 {
+  margin-bottom: 15rpx;
+}
+.mb_25 {
+  margin-bottom: 25rpx;
+}
+.mb_40 {
+  margin-bottom: 40rpx;
+}
+.mb_60 {
+  margin-bottom: 50rpx;
+}
+.pl_15 {
+  padding-left: 15rpx;
+}
+.pl_40 {
+  padding-left: 40rpx;
+}
+.pb_15 {
+  padding-bottom: 15rpx;
+}
+.pb_10 {
+  padding-bottom: 10rpx;
+}
+.pb_25 {
+  padding-bottom: 25rpx;
+}
+.pb_55 {
+  padding-bottom: 55rpx;
+}
+.pb_80 {
+  padding-bottom: 80rpx;
+}
+.pb_100 {
+  padding-bottom: 100rpx;
+}
+.pb_125 {
+  padding-bottom: 125rpx;
+}
+.pb_150 {
+  padding-bottom: 150rpx;
+}
+.pt_15 {
+  padding-top: 15rpx;
+}
+.pt_25 {
+  padding-top: 25rpx;
+}
+.pl_25 {
+  padding-left: 25rpx;
+}
+.pr_40 {
+  padding-right: 40rpx;
+}
+.pr_25 {
+  padding-right: 25rpx;
+}
+.pr_20 {
+  padding-right: 20rpx;
+}
+.border_bottom {
+  border-bottom: 1rpx #eaeaea solid;
+}
+.border_top {
+  border-top: 1rpx #f1f1f1 solid;
+}
+.text_align_center {
+  text-align: center;
+}
+.text_align_left {
+  text-align: left;
+}
+.text_align_right {
+  text-align: right;
+}
+.text_underline {
+  text-decoration: underline;
+}
+.vertical {
+  vertical-align: middle;
+}
+.box_shadow {
+  box-shadow: 0rpx 4rpx 20rpx 0rpx rgba(23, 124, 176, 0.6);
+}
+
+/*必填红*/
+.color_E21616 {
+  color: #e21616;
+}
+/*红色删除文字的红*/
+.color_F20000 {
+  color: #f20000;
+}
+/*主色黑*/
+.color_000000 {
+  color: #000000;
+}
+
+/*常用字体色*/
+.color_666666 {
+  color: #666666;
+}
+.color_333333 {
+  color: #333333;
+}
+.color_244DDA {
+  color: #244dda;
+}
+.color_999999 {
+  color: #999999;
+}
+.color_D3D3D3 {
+  color: #d3d3d3;
+}
+.color_ff5b00 {
+  color: #ff5b00;
+}
+/*字体加粗*/
+.ft_weight_300 {
+  font-weight: 300;
+}
+.ft_weight_400 {
+  font-weight: 400;
+}
+.ft_weight_500 {
+  font-weight: 500;
+}
+.ft_weight_600 {
+  font-weight: 600;
+}
+.ft_weight_bold {
+  font-weight: bold;
+}
+.ft_weight_bolder {
+  font-weight: bolder;
+}
+/*字体大小*/
+.ft_size_10 {
+  font-size: 20rpx;
+}
+.ft_size_11 {
+  font-size: 22rpx;
+}
+.ft_size_12 {
+  font-size: 24rpx;
+}
+.ft_size_13 {
+  font-size: 26rpx;
+}
+.ft_size_14 {
+  font-size: 28rpx;
+}
+.ft_size_15 {
+  font-size: 30rpx;
+}
+.ft_size_16 {
+  font-size: 32rpx;
+}
+.ft_size_17 {
+  font-size: 34rpx;
+}
+.ft_size_18 {
+  font-size: 36rpx;
+}
+.ft_size_19 {
+  font-size: 38rpx;
+}
+.ft_size_20 {
+  font-size: 40rpx;
+}
+.width_30 {
+  width: 30%;
+}
+.width_100 {
+  width: 100%;
+}
+.width_80 {
+  width: 80%;
+}
+.width_94 {
+  width: 94%;
+}
+.width_50rpx {
+  width: 50rpx;
+}
+.width_120rpx {
+  width: 120rpx;
+}
+.width_250rpx {
+  width: 250rpx;
+}
+.height_100 {
+  height: 100%;
+}
+.min_height_100vh {
+  min-height: 100vh;
+}
+.min_height_100 {
+  min-height: 100%;
+}
+.min_height_100vh_cal {
+  min-height: calc(100vh-50rpx);
+}
+.min_height_200rpx {
+  min-height: 200rpx;
+}
+.bigborder {
+  border-bottom: #f5f5f5 25rpx solid;
+}
+.border_r_25 {
+  border-radius: 25rpx;
+}
+.border_solid {
+  border: #fafafa 1rpx solid;
+}
+.border_solid_black {
+  border: #000000 1rpx solid;
+}
+.border_solid_grey {
+  border: #f0f0f0 1rpx solid;
+}
+.border_right_solid {
+  border-right: #fafafa 1rpx solid;
+}
+.padding_l_r_25 {
+  padding: 0 25rpx 0 25rpx;
+}
+.padding_t_b_25 {
+  padding: 25rpx 0 25rpx 0;
+}
+.padding_25 {
+  padding: 25rpx;
+}
+.pointer {
+  cursor: pointer;
+}
+.iconCon {
+  width: 80rpx;
+  height: 80rpx;
+}
+.widthIconCon {
+  width: 80rpx;
+  height: 60rpx;
+  background-repeat: no-repeat;
+}
+.littleIconCon {
+  width: 40rpx;
+  height: 40rpx;
+}
+.commonCon {
+  width: auto;
+  padding: 60rpx 40rpx;
+  border-radius: 25rpx;
+}

@@ -1,0 +1,137 @@
+/**index.wxss**/
+
+page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-image: linear-gradient(to right bottom, #d2f0f4, #d4f2e7);
+}
+.blueBoxShadow {
+  box-shadow: 6px 6rpx 20rpx #222121;
+}
+.splitBar {
+  width: 100%;
+  height: 20rpx;
+}
+.topSearch {
+  width: 100%;
+  min-height: 80rpx;
+}
+.searchInput {
+  width: 96%;
+  height: 80rpx;
+  margin: 25rpx;
+  border: lightgray solid 1rpx;
+}
+.searchIcon {
+  width: 80rpx;
+  height: 80rpx;
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
+}
+.swiperCon {
+  width: 750rpx;
+  min-height: 580rpx;
+}
+.swiperInnerCon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 750rpx;
+  height: 580rpx;
+  display: flex;
+  flex-flow: nowrap row;
+  justify-content: center;
+  align-items: center;
+}
+.swiperItem {
+  position: relative;
+  width: 750rpx;
+  height: 580rpx;
+}
+.swiperItemBCBlur {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 750rpx;
+  height: 580rpx;
+  background-size: 750rpx 580rpx;
+  background-repeat: no-repeat;
+  -webkit-filter: blur(12rpx);
+  -moz-filter: blur(12rpx);
+  -o-filter: blur(12rpx);
+  -ms-filter: blur(12rpx);
+  filter: blur(12rpx);
+}
+.swiperItemImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520rpx;
+  height: 520rpx;
+  border-radius: 25rpx;
+  border: lightgray solid 1rpx;
+  box-shadow: 0px 6rpx 6rpx #222121;
+}
+.quickTab {
+  width: 100%;
+  height: 180rpx;
+}
+.scroll-view_H {
+  width: 100%;
+  height: 150rpx;
+  white-space: nowrap;
+}
+
+.scroll-view-item_H {
+  display: inline-block;
+  width: 200rpx;
+  height: 150rpx;
+}
+.iconCon {
+  display: inline-block;
+  width: 170rpx;
+}
+.scrolInnerItem {
+  width: 170rpx;
+  height: 150rpx;
+  border-radius: 10rpx;
+  background-color: rgba(6, 82, 121, 0.5);
+}
+.titleCon {
+  width: 100%;
+  height: 100rpx;
+}
+.articleList {
+  width: 750rpx;
+  padding-bottom: 100rpx;
+}
+.articleCon,
+.imgCon,
+.artcleImage {
+  width: 640rpx;
+}
+.articleCon {
+  background-color: #fff;
+  padding: 25rpx;
+  border-radius: 25rpx;
+  box-shadow: 0px 4rpx 4rpx #9c9999;
+}
+.artcleImage {
+  border-radius: 8rpx;
+}
+.titleIcon {
+  position: absolute;
+  top: -10rpx;
+  left: 40rpx;
+  z-index: -1;
+}
+.titleIconWidth {
+  width: 80rpx;
+  height: 40rpx;
+  background-repeat: no-repeat;
+}

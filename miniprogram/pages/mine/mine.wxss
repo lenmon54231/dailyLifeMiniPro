@@ -1,0 +1,135 @@
+Page {
+  font-size: 28rpx;
+}
+
+.top {
+  width: 100%;
+  height: 350rpx;
+  background: #1c86bb;
+  padding-top: 30rpx;
+  position: relative;
+}
+
+.center {
+  width: 95%;
+  height: 300rpx;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  border-radius: 10rpx;
+}
+
+.center_top {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 160rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+  border-bottom: 1rpx solid #eeeeee;
+}
+.userinfo-block-avatar {
+  width: 122rpx;
+  height: 122rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.center_info {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rpx;
+  margin-left: 60rpx;
+}
+
+.center_name {
+  font-size: 40rpx;
+}
+
+.center_phone {
+  color: #bebebe;
+}
+
+.center_down {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 70rpx;
+  margin: 0 auto;
+  margin-top: 20rpx;
+}
+
+.center_rank {
+  width: 50%;
+  height: 70rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.rank_text {
+  height: 70rpx;
+  line-height: 70rpx;
+  margin-left: 10rpx;
+  color: #aaaaaa;
+}
+
+.center_rank image {
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.center_score {
+  width: 50%;
+  height: 70rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.center_score image {
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.gif-wave {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  mix-blend-mode: screen;
+  height: 100rpx;
+}
+.centerStepCon {
+  height: 120rpx;
+  margin: 50rpx 40rpx;
+}
+.taskListCon {
+  height: 300rpx;
+  margin: 50rpx 40rpx;
+}
+.blueStickForStep {
+  background-color: lightgray;
+  width: 230rpx;
+  height: 6rpx;
+  position: absolute;
+  top: 100rpx;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+.firstStep {
+  left: 15%;
+}
+.secondStep {
+  left: 50%;
+}
+.stepDone {
+  background-color: #1c86bb;
+}
+
+.taskListItem {
+  padding-bottom: 10rpx;
+  border-bottom: lightgray 1rpx solid;
+}

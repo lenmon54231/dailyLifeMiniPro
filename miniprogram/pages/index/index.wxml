@@ -1,0 +1,59 @@
+<!-- index.wxml -->
+<view class="container">
+    <view class="topSearch flex_row_center" hover-class="none" hover-stop-propagation="false">
+        <view class="searchInput flex_column_center position_re">
+            <input class="" value="" type="text" password="false" placeholder="输入'游泳'试试!" placeholder-style="" placeholder-class="input-placeholder" disabled="false" maxlength="140" focus="false" bindinput="" bindfocus="" bindblur="" bindconfirm=""></input>
+            <view class="searchIcon flex_column_center">
+                <icon class="icon-small" type="search" size="36"></icon>
+            </view>
+        </view>
+    </view>
+    <view class="swiperCon position_re" hover-class="none" hover-stop-propagation="false">
+        <swiper indicator-dots="true" indicator-color="rgba(6, 82, 121, .8)" indicator-active-color='rgba(112, 243, 255, .9)' circular="true" class="swiperInnerCon" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+            <block wx:for="{{background}}" wx:key="*this">
+                <swiper-item class="swiperItem">
+                    <view class="swiperItemBCBlur" style="{{'background-image: url(' + item + ')'}}" hover-class="none" hover-stop-propagation="false"></view>
+                    <image class="swiperItemImage" src=" {{item}}" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
+                </swiper-item>
+            </block>
+        </swiper>
+    </view>
+    <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
+    <view class="quickTab flex_row_center" hover-class="none" hover-stop-propagation="false">
+        <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
+            <view id="demo1" wx:for="{{quickTabList}}" wx:key="index" class="scroll-view-item_H  position_re">
+                <view class="scrolInnerItem position_ab_center" hover-class="none" hover-stop-propagation="false">
+                    <view class="iconCon position_re flex_row_center" hover-class="none" hover-stop-propagation="false">
+                        <icon class="position_ab_center t-icon widthIconCon {{item.icon}}"></icon>
+                    </view>
+                    <view class="flex_row_center" hover-class="none" hover-stop-propagation="false">
+                        {{item.name}}
+                    </view>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+    <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
+    <view class="titleCon flex_row_between position_re" hover-class="none" hover-stop-propagation="false">
+        <view class="titleIcon" hover-class="none" hover-stop-propagation="false">
+            <icon class="t-icon titleIconWidth t-icon-eyu"></icon>
+        </view>
+        <view class="pl_40 ft_size_19 ft_weight_bold">为您推荐</view>
+        <view class="pr_40">查看更多</view>
+    </view>
+    <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
+    <view class="articleList flex_row_center" hover-class="none" hover-stop-propagation="false">
+        <view class="articleCon blueBoxShadow" hover-class="none" hover-stop-propagation="false">
+            <view class="imgCon mb_15" hover-class="none" hover-stop-propagation="false">
+                <image class="artcleImage" src="https://limengtupian.oss-cn-beijing.aliyuncs.com/%E8%BD%AE%E6%92%AD%E5%9B%BE/2.jpg" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
+            </view>
+            <view class="ft_size_17 ft_weight_bold mb_15" hover-class="none" hover-stop-propagation="false">
+                猫在宫中，春回大地万物生
+            </view>
+            <view class="flex_row_between mb_15" hover-class="none" hover-stop-propagation="false">
+                <view>2020.1.1</view>
+                <view>公众号:微故宫</view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "pages/openapi/openapi",
+    "pages/openapi/serverapi/serverapi",
+    "pages/openapi/callback/callback",
+    "pages/openapi/cloudid/cloudid",
+    "pages/im/im",
+    "pages/im/room/room",
+    "pages/mine",
+    "pages/recorder/recorder"
+  ],
+  "window": {
+    "backgroundColor": "#44cef6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#177cb0",
+    "navigationBarTitleText": "ENJOY",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#88ada6",
+    "selectedColor": "#fff",
+    "borderStyle": "white",
+    "backgroundColor": "#065279",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/kucha.png",
+        "selectedIconPath": "images/kucha.png",
+        "text": "TARGET"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/kaixuan.png",
+        "selectedIconPath": "images/kaixuan.png",
+        "text": "RECORDER"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "images/tianan.png",
+        "selectedIconPath": "images/tianan.png",
+        "text": "MINE"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}
