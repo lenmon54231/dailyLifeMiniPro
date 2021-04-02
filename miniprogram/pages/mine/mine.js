@@ -21,6 +21,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: 'MINE-ZONE',
+    })
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',

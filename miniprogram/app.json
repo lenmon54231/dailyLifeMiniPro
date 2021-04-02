@@ -20,7 +20,7 @@
   "window": {
     "backgroundColor": "#44cef6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#177cb0",
+    "navigationBarBackgroundColor": "#426666",
     "navigationBarTitleText": "ENJOY",
     "navigationBarTextStyle": "white"
   },
@@ -28,7 +28,7 @@
     "color": "#88ada6",
     "selectedColor": "#fff",
     "borderStyle": "white",
-    "backgroundColor": "#065279",
+    "backgroundColor": "#426666",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -37,7 +37,7 @@
         "text": "TARGET"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/recorder/recorder",
         "iconPath": "images/kaixuan.png",
         "selectedIconPath": "images/kaixuan.png",
         "text": "RECORDER"
