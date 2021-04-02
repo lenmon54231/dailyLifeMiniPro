@@ -35,24 +35,24 @@
     </view>
     <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
     <view class="titleCon flex_row_between position_re" hover-class="none" hover-stop-propagation="false">
-        <view class="titleIcon" hover-class="none" hover-stop-propagation="false">
+        <!-- <view class="titleIcon" hover-class="none" hover-stop-propagation="false">
             <icon class="t-icon titleIconWidth t-icon-eyu"></icon>
-        </view>
-        <view class="pl_40 ft_size_19 ft_weight_bold">为您推荐</view>
-        <view class="pr_40">查看更多</view>
+        </view> -->
+        <view class="pl_40 ft_size_19 ft_weight_bold">每日目标</view>
+        <view class="pr_40">MORE></view>
     </view>
     <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
-    <view class="articleList flex_row_center" hover-class="none" hover-stop-propagation="false">
-        <view class="articleCon blueBoxShadow" hover-class="none" hover-stop-propagation="false">
+    <view class="articleList flex_column_around" hover-class="none" hover-stop-propagation="false">
+        <view wx:for="{{taskList}}" wx:key="index" class="articleCon blueBoxShadow" hover-class="none" hover-stop-propagation="false">
             <view class="imgCon mb_15" hover-class="none" hover-stop-propagation="false">
-                <image class="artcleImage" src="https://limengtupian.oss-cn-beijing.aliyuncs.com/%E8%BD%AE%E6%92%AD%E5%9B%BE/2.jpg" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
+                <image class="artcleImage" src="{{item.url}}" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
             </view>
             <view class="ft_size_17 ft_weight_bold mb_15" hover-class="none" hover-stop-propagation="false">
-                猫在宫中，春回大地万物生1
+                {{item.logo}}
             </view>
             <view class="flex_row_between mb_15" hover-class="none" hover-stop-propagation="false">
                 <view>2020.1.1</view>
-                <view>公众号:微故宫</view>
+                <view>{{item.name}}</view>
             </view>
         </view>
     </view>

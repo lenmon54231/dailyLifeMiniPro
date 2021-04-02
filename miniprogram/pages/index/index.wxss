@@ -118,6 +118,7 @@ page {
 .articleCon {
   background-color: #fff;
   padding: 25rpx;
+  margin-bottom: 25rpx;
   border-radius: 25rpx;
   box-shadow: 0px 4rpx 4rpx #9c9999;
 }

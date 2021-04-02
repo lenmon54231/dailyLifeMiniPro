@@ -247,7 +247,7 @@ Component({
         this.setData({
           selectDay: selectDay,
         })
-        this.triggerEvent('change', this.data.selectDay)
+        // this.triggerEvent('change', this.data.selectDay)
       }
     },
   },

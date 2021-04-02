@@ -16,6 +16,26 @@ Page({
       { name: '出错', icon: 't-icon-ziyuan16' },
       { name: '医疗疾病史', icon: 't-icon-ziyuan13' },
     ],
+    taskList: [
+      {
+        name: '游泳',
+        logo: '猫在宫中，春回大地万物生1',
+        url: 'https://limengtupian.oss-cn-beijing.aliyuncs.com/picDemo/ls1.jpg',
+        time: '',
+      },
+      {
+        name: '吉他',
+        logo: '猫在宫中，春回大地万物生1',
+        url: 'https://limengtupian.oss-cn-beijing.aliyuncs.com/picDemo/lg1.jpg',
+        time: '',
+      },
+      {
+        name: '阅读',
+        logo: '猫在宫中，春回大地万物生1',
+        url: 'https://limengtupian.oss-cn-beijing.aliyuncs.com/picDemo/lr1.jpg',
+        time: '',
+      },
+    ],
     indicatorDots: true,
     vertical: false,
     autoplay: true,
