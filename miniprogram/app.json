@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/mine/mine",
+    "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
     "pages/databaseGuide/databaseGuide",
@@ -55,6 +55,9 @@
     "connectSocket": 10000,
     "uploadFile": 10000,
     "downloadFile": 10000
+  },
+  "usingComponents": {
+    "iconfont": "components/iconfont/iconfont"
   },
   "debug": true,
   "sitemapLocation": "sitemap.json",

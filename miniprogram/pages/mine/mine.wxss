@@ -71,11 +71,10 @@ Page {
 .rank_text {
   height: 70rpx;
   line-height: 70rpx;
-  margin-left: 10rpx;
   color: #aaaaaa;
 }
 
-.center_rank image {
+.center_rank .rank_icon {
   width: 70rpx;
   height: 70rpx;
 }
@@ -87,7 +86,7 @@ Page {
   flex-direction: row;
 }
 
-.center_score image {
+.center_score .rank_icon {
   width: 70rpx;
   height: 70rpx;
 }

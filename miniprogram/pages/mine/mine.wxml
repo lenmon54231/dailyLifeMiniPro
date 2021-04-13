@@ -8,7 +8,15 @@
                             <open-data type="userAvatarUrl"></open-data>
                         </view>
                     </block>
-                    <block wx:elif="{{!hasUserInfo}}">
+                    <block wx:if="{{!hasUserInfo}}">
+                        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">
+                            获取头像昵称
+                        </button>
+                        <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                            获取头像昵称
+                        </button>
+                    </block>
+                    <!-- <block wx:elif="{{!hasUserInfo}}">
                         <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" size="default"></button>
                         <button wx:else open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" size="default"></button>
                     </block>
@@ -17,17 +25,21 @@
                     </block>
                     <view class="userinfo-nickname-wrapper">
                         <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
-                    </view>
+                    </view> -->
                 </view>
             </view>
             <view class="center_down">
                 <view class="center_rank" bindtap="toNone">
-                    <image class="rank_icon" src=""></image>
-                    <text class="rank_text">我的排名</text>
+                    <div class="rank_icon flex_row_center">
+                        <iconfont name="paiming" />
+                    </div>
+                    <text class="rank_text">我的排名:1</text>
                 </view>
                 <view class="center_score" bindtap="toNone">
-                    <image class="rank_icon" src=""></image>
-                    <text class="rank_text">我的积分</text>
+                    <div class="rank_icon flex_row_center">
+                        <iconfont name="jifen" color="{{['red', 'blue']}}" />
+                    </div>
+                    <text class="rank_text">我的积分:100</text>
                 </view>
             </view>
         </view>

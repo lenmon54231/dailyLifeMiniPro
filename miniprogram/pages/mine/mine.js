@@ -1,19 +1,34 @@
 //index.js
 const app = getApp()
+import { fetch } from '../../utils/fetch'
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    hasUserInfo: false,
+    canIUseGetUserProfile: false,
+    punchGoalList: null,
+    slideButtons: [
+      {
+        text: '修改',
+        data: 'edit',
+      },
+      {
+        type: 'warn',
+        data: 'delete',
+        text: '删除',
+      },
+    ],
+    slideView: false,
+    slideViewBoundary: null,
     isFirstStepDone: true,
     isSecondStepDone: false,
     avatarUrl: './user-unlogin.png',
     userInfo: {},
-    hasUserInfo: false,
     logged: false,
     takeSession: false,
     requestResult: '',
-    canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl'), // 如需尝试获取用户信息可改为false
   },
 
@@ -71,20 +86,61 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {},
-  getUserProfile() {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+  //   getUserProfile() {
+  //     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+  //     wx.getUserProfile({
+  //       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+  //       success: (res) => {
+  //         this.setData({
+  //           avatarUrl: res.userInfo.avatarUrl,
+  //           userInfo: res.userInfo,
+  //           hasUserInfo: true,
+  //         })
+  //       },
+  //     })
+  //   },
+  getUserProfile(e) {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
-      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        this.setData({
-          avatarUrl: res.userInfo.avatarUrl,
-          userInfo: res.userInfo,
-          hasUserInfo: true,
+        console.log(res, '1111111')
+        fetch({
+          url: 'login',
+          method: 'POST',
+          data: { userInfo: res.userInfo },
+        }).then((res) => {
+          console.log(res, '2222')
+          app.toast(res.msg)
+          if (res.code !== 200) return
+          wx.setStorageSync('userInfo', res.data)
+          app.globalData.userInfo = res.data
+          app.event.emit('login')
+          this.setData({ userInfo: res.data, hasUserInfo: true })
+          this.getData(res.data.userId)
         })
+        // this.setData({
+        //   userInfo: res.userInfo,
+        //   hasUserInfo: true,
+        // })
       },
     })
   },
-
+  getData(userId) {
+    fetch({
+      url: 'punchgoals',
+      method: 'GET',
+      data: { userId },
+    }).then((res) => {
+      for (const item of res.data.list) {
+        if (item.endTime && new Date(item.endTime) < new Date()) {
+          item.isEnd = true
+        }
+      }
+      this.setData({ punchGoalList: res.data.list })
+    })
+  },
   onGetUserInfo: function (e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
