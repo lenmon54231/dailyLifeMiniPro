@@ -1,273 +1,358 @@
-// components/calendar/calendar.js
-Component({
+// pages/calendar/index.js
+const app = getApp();
+const nowYear = new Date().getFullYear();
+const nowMonth = new Date().getMonth() + 1;
+const newDate = new Date().getDate();
+import { fetch } from "../../utils/fetch";
+import { formatDate } from "../../utils/formatDate";
+Page({
   /**
-   * 组件的属性列表
-   */
-  properties: {
-    spot: {
-      type: Array,
-      value: [],
-    },
-    defaultTime: {
-      type: String,
-      value: '',
-    },
-  },
-
-  /**
-   * 组件的初始数据
+   * 页面的初始数据
    */
   data: {
-    dateList: [], //日历主体渲染数组
-    selectDay: {}, //选中时间
+    selectDate: {
+      year: nowYear,
+      month: nowMonth,
+      date: newDate,
+    },
+    currentMonth: {
+      year: nowYear,
+      month: nowMonth,
+    },
+    todayPunch: [],
+    punchGoalList: [],
+    punchList: {},
+    scrollHeight: "",
+    dates: [],
+  },
+
+  jumpToday() {
+    const calendar = this.selectComponent("#calendar").calendar;
+    calendar.jump();
+    this.whenChangeMonth({
+      detail: {
+        next: {
+          year: nowYear,
+          month: nowMonth,
+        },
+      },
+    });
+  },
+  afterTapDate(e) {
+    console.log("afterTapDate", e.detail); // => { year: 2019, month: 12, date: 3, ...}
+    const { year, month, date, todoText } = e.detail;
+    const todayPunch = [];
+    if (todoText) {
+      for (const item of todoText) {
+        const punchGoal = this.data.punchGoalList.find(
+          (punchGoalItem) => punchGoalItem._id === item.punchGoalId
+        );
+        punchGoal.comment = item.comment;
+        punchGoal.punchId = item._id;
+        todayPunch.push(punchGoal);
+      }
+    }
+    this.setData({ selectDate: { year, month, date }, todayPunch });
+  },
+
+  whenChangeMonth(e) {
+    console.log("whenChangeMonth", e.detail); // => { current: { month: 3, ... }, next: { month: 4, ... }}
+    const { year, month } = e.detail.next;
+    this.data.currentMonth = { year, month };
+    this.data.punchList[`punchList-${year}-${month}`]
+      ? this.setTodos(this.data.punchList[`punchList-${year}-${month}`])
+      : this.getData(year, month);
+  },
+
+  setTodos(punchList) {
+    const dates = [];
+    for (const item of punchList) {
+      if (item.list && item.list.length !== 0) {
+        dates.push({
+          year: this.data.currentMonth.year,
+          month: this.data.currentMonth.month,
+          date: item._id,
+          todoText: item.list,
+        });
+      }
+    }
+    const calendar = this.selectComponent("#calendar").calendar;
+    if (!calendar) {
+      this.setData({ dates });
+      return;
+    }
+    calendar.clearTodos();
+    calendar.setTodos({ dates });
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function () {
+    this.getGoalData();
+    app.event.on("punchGoalChange", this.punchGoalChange, this);
+    app.event.on("punchChange", this.punchChange, this);
+    app.event.on("login", this.login, this);
+    const { windowHeight, windowWidth } = wx.getSystemInfoSync();
+    this.setData({ scrollHeight: windowHeight - (windowWidth / 750) * 810 });
+  },
+
+  punchGoalChange(e) {
+    const { type, punchGoal } = e;
+    if (type === 1) {
+      this.getGoalData();
+    }
+    if (type === 2) {
+      const index = this.data.punchGoalList.findIndex(
+        (item) => item._id === punchGoal._id
+      );
+      this.data.punchGoalList[index] = punchGoal;
+      const todayPunch = this.data.todayPunch.map((item) =>
+        item._id === punchGoal._id ? { ...item, ...punchGoal } : item
+      );
+      this.setData({ todayPunch });
+    }
+    if (type === 3) {
+      for (const key in this.data.punchList) {
+        for (const issue of this.data.punchList[key]) {
+          issue.list = issue.list.filter(
+            (item) => item.punchGoalId !== punchGoal._id
+          );
+        }
+      }
+      const index = this.data.punchGoalList.findIndex(
+        (item) => item._id === punchGoal._id
+      );
+      this.data.punchGoalList.splice(index, 1);
+      this.setTodos(
+        this.data.punchList[
+          `punchList-${this.data.currentMonth.year}-${this.data.currentMonth.month}`
+        ]
+      );
+      const todayPunch = this.data.todayPunch.filter(
+        (item) => item._id !== punchGoal._id
+      );
+      this.setData({ todayPunch });
+    }
+  },
+
+  punchChange(e) {
+    const { type, punch } = e;
+    const punchDate = formatDate(punch.date);
+    const punchBeforeDate = formatDate(e.punchBeforeDate);
+    const year = Number(punchDate.slice(0, 4));
+    const month = Number(punchDate.slice(5, 7));
+    const date = Number(punchDate.slice(8, 10));
+    if (type === 1 && this.data.punchList[`punchList-${year}-${month}`]) {
+      this.getData(year, month);
+      if (this.isSelectDate(year, month, date)) {
+        this.unshiftTodayPunch(punch);
+      }
+    }
+    if (type === 2) {
+      const beforeYear = Number(punchBeforeDate.slice(0, 4));
+      const beforeMonth = Number(punchBeforeDate.slice(5, 7));
+      const beforeDate = Number(punchBeforeDate.slice(8, 10));
+      if (beforeYear === year && beforeMonth === month) {
+        if (this.data.punchList[`punchList-${year}-${month}`]) {
+          if (beforeDate === date) {
+            for (let issue of this.data.punchList[
+              `punchList-${year}-${month}`
+            ]) {
+              if (issue._id === date) {
+                const index = issue.list.findIndex(
+                  (item) => item._id === punch._id
+                );
+                issue.list[index] = punch;
+                break;
+              }
+            }
+          } else {
+            this.handlePunchList(
+              this.data.punchList[`punchList-${year}-${month}`],
+              beforeDate,
+              punch._id,
+              true,
+              date
+            );
+          }
+          if (this.isCurMonth(year, month)) {
+            this.setTodos(this.data.punchList[`punchList-${year}-${month}`]);
+          }
+        }
+      } else {
+        if (this.data.punchList[`punchList-${beforeYear}-${beforeMonth}`]) {
+          this.handlePunchList(
+            this.data.punchList[`punchList-${beforeYear}-${beforeMonth}`],
+            beforeDate,
+            punch._id
+          );
+          if (this.isCurMonth(beforeYear, beforeMonth)) {
+            this.setTodos(
+              this.data.punchList[`punchList-${beforeYear}-${beforeMonth}`]
+            );
+          }
+        }
+        if (this.data.punchList[`punchList-${year}-${month}`]) {
+          punch.punchYear = year;
+          punch.punchMonth = month;
+          punch.punchDate = date;
+          const index = this.data.punchList[
+            `punchList-${year}-${month}`
+          ].findIndex((item) => item._id === punch.punchDate);
+          if (index === -1) {
+            this.data.punchList[`punchList-${year}-${month}`].push({
+              _id: punch.punchDate,
+              list: [punch],
+            });
+          } else {
+            this.data.punchList[`punchList-${year}-${month}`][index].list.push(
+              punch
+            );
+          }
+          if (this.isCurMonth(year, month)) {
+            this.setTodos(this.data.punchList[`punchList-${year}-${month}`]);
+          }
+        }
+      }
+      if (this.isSelectDate(beforeYear, beforeMonth, beforeDate)) {
+        this.spliceTodayPunch(punch._id);
+      }
+      if (this.isSelectDate(year, month, date)) {
+        this.unshiftTodayPunch(punch);
+      }
+    }
+    if (type === 3 && this.data.punchList[`punchList-${year}-${month}`]) {
+      this.handlePunchList(
+        this.data.punchList[`punchList-${year}-${month}`],
+        date,
+        punch._id
+      );
+      if (this.isCurMonth(year, month)) {
+        this.setTodos(this.data.punchList[`punchList-${year}-${month}`]);
+      }
+      if (this.isSelectDate(year, month, date)) {
+        this.spliceTodayPunch(punch._id);
+      }
+    }
+  },
+
+  login() {
+    this.getGoalData();
+    this.getData(this.data.selectDate.year, this.data.selectDate.month);
+  },
+
+  isSelectDate(year, month, date) {
+    return (
+      year === this.data.selectDate.year &&
+      month === this.data.selectDate.month &&
+      date === this.data.selectDate.date
+    );
+  },
+  isCurMonth(year, month) {
+    return (
+      year === this.data.currentMonth.year &&
+      month === this.data.currentMonth.month
+    );
+  },
+  handlePunchList(punchList, date, id, isPush = false, pushDate) {
+    for (const issue of punchList) {
+      if (issue._id === date) {
+        const index = issue.list.findIndex((item) => item._id === id);
+        issue.list.splice(index, 1);
+        if (!isPush) break;
+      }
+      if (isPush && issue._id === pushDate) {
+        issue.list.push(punch);
+      }
+    }
+  },
+  spliceTodayPunch(id) {
+    const { todayPunch } = this.data;
+    const index = todayPunch.findIndex((item) => item.id === id);
+    todayPunch.splice(index, 1);
+    this.setData({ todayPunch });
+  },
+  unshiftTodayPunch(punch) {
+    const { todayPunch } = this.data;
+    let punchGoal = this.data.punchGoalList.find(
+      (item) => item._id === punch.punchGoalId
+    );
+    punchGoal.comment = punch.comment;
+    punchGoal.punchId = punch._id;
+    todayPunch.unshift(punchGoal);
+    this.setData({ todayPunch });
+  },
+
+  getGoalData() {
+    if (!app.globalData.userInfo) {
+      app.toast("请返回首页登陆");
+      return;
+    }
+    fetch({
+      url: "punchgoals",
+      method: "GET",
+      data: { userId: app.globalData.userInfo.userId },
+    }).then((res) => {
+      this.getData(this.data.selectDate.year, this.data.selectDate.month);
+      this.setData({ punchGoalList: res.data.list });
+    });
+  },
+
+  getData(year, month) {
+    if (!app.globalData.userInfo) {
+      app.toast("请返回首页登陆");
+      return;
+    }
+    fetch({
+      url: "punches",
+      method: "GET",
+      queryString: { year, month },
+      data: {
+        userId: app.globalData.userInfo.userId,
+      },
+    }).then((res) => {
+      this.data.punchList[`punchList-${year}-${month}`] = res.data.list;
+      this.setTodos(res.data.list);
+    });
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    // todayPunch
   },
 
   /**
-   * 组件的方法列表
+   * 生命周期函数--监听页面显示
    */
-  methods: {
-    /**
-     * 时间戳转化为年 月 日 时 分 秒
-     * time: 需要被格式化的时间，可以被new Date()解析即可
-     * format：格式化之后返回的格式，年月日时分秒分别为Y, M, D, h, m, s，这个参数不填的话则显示多久前
-     */
-    formatTime(time, format) {
-      function formatNumber(n) {
-        n = n.toString()
-        return n[1] ? n : '0' + n
-      }
+  onShow: function () {},
 
-      function getDate(time, format) {
-        const formateArr = ['Y', 'M', 'D', 'h', 'm', 's']
-        const returnArr = []
-        const date = new Date(time)
-        returnArr.push(date.getFullYear())
-        returnArr.push(formatNumber(date.getMonth() + 1))
-        returnArr.push(formatNumber(date.getDate()))
-        returnArr.push(formatNumber(date.getHours()))
-        returnArr.push(formatNumber(date.getMinutes()))
-        returnArr.push(formatNumber(date.getSeconds()))
-        for (const i in returnArr) {
-          format = format.replace(formateArr[i], returnArr[i])
-        }
-        return format
-      }
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {},
 
-      function getDateDiff(time) {
-        let r = ''
-        const ft = new Date(time)
-        const nt = new Date()
-        const nd = new Date(nt)
-        nd.setHours(23)
-        nd.setMinutes(59)
-        nd.setSeconds(59)
-        nd.setMilliseconds(999)
-        const d = parseInt((nd - ft) / 86400000)
-        switch (true) {
-          case d === 0:
-            const t = parseInt(nt / 1000) - parseInt(ft / 1000)
-            switch (true) {
-              case t < 60:
-                r = '刚刚'
-                break
-              case t < 3600:
-                r = parseInt(t / 60) + '分钟前'
-                break
-              default:
-                r = parseInt(t / 3600) + '小时前'
-            }
-            break
-          case d === 1:
-            r = '昨天'
-            break
-          case d === 2:
-            r = '前天'
-            break
-          case d > 2 && d < 30:
-            r = d + '天前'
-            break
-          default:
-            r = getDate(time, 'Y-M-D')
-        }
-        return r
-      }
-      if (!format) {
-        return getDateDiff(time)
-      } else {
-        return getDate(time, format)
-      }
-    },
-    //picker设置月份
-    editMonth(e) {
-      const arr = e.detail.value.split('-')
-      const year = parseInt(arr[0])
-      const month = parseInt(arr[1])
-      this.setMonth(year, month)
-    },
-    //上月切换按钮点击
-    lastMonth() {
-      const lastMonth = new Date(
-        this.data.selectDay.year,
-        this.data.selectDay.month - 2
-      )
-      const year = lastMonth.getFullYear()
-      const month = lastMonth.getMonth() + 1
-      this.setMonth(year, month)
-    },
-    //下月切换按钮点击
-    nextMonth() {
-      const nextMonth = new Date(
-        this.data.selectDay.year,
-        this.data.selectDay.month
-      )
-      const year = nextMonth.getFullYear()
-      const month = nextMonth.getMonth() + 1
-      this.setMonth(year, month)
-    },
-    //设置月份
-    setMonth(setYear, setMonth, setDay) {
-      if (
-        this.data.selectDay.year !== setYear ||
-        this.data.selectDay.month !== setMonth
-      ) {
-        const day = Math.min(
-          new Date(setYear, setMonth, 0).getDate(),
-          this.data.selectDay.day
-        )
-        const time = new Date(setYear, setMonth - 1, setDay ? setDay : day)
-        const data = {
-          selectDay: {
-            year: setYear,
-            month: setMonth,
-            day: setDay ? setDay : day,
-            dateString: this.formatTime(time, 'Y-M-D'),
-          },
-        }
-        if (!setDay) {
-          data.open = true
-        }
-        this.setData(data)
-        this.dateInit(setYear, setMonth)
-        this.setSpot()
-        this.triggerEvent('change', this.data.selectDay)
-      }
-    },
-    //展开收起
-    openChange() {
-      this.setData({
-        open: !this.data.open,
-      })
-      this.triggerEvent('aaa', { a: 0 })
-      this.dateInit()
-      this.setSpot()
-    },
-    //设置日历底下是否展示小圆点
-    setSpot() {
-      const timeArr = this.data.spot.map((item) => {
-        return this.formatTime(item, 'Y-M-D')
-      })
-      this.data.dateList.forEach((item) => {
-        if (timeArr.indexOf(item.dateString) !== -1) {
-          item.spot = true
-        } else {
-          item.spot = false
-        }
-      })
-      this.setData({
-        dateList: this.data.dateList,
-      })
-    },
-    //日历主体的渲染方法
-    dateInit(
-      setYear = this.data.selectDay.year,
-      setMonth = this.data.selectDay.month
-    ) {
-      let dateList = [] //需要遍历的日历数组数据
-      let now = new Date(setYear, setMonth - 1) //当前月份的1号
-      let startWeek = now.getDay() //目标月1号对应的星期
-      let dayNum = new Date(setYear, setMonth, 0).getDate() //当前月有多少天
-      let forNum = Math.ceil((startWeek + dayNum) / 7) * 7 //当前月跨越的周数
-      if (this.data.open) {
-        //展开状态，需要渲染完整的月份
-        for (let i = 0; i < forNum; i++) {
-          const now2 = new Date(now)
-          now2.setDate(i - startWeek + 1)
-          let obj = {}
-          obj = {
-            day: now2.getDate(),
-            month: now2.getMonth() + 1,
-            year: now2.getFullYear(),
-            dateString: this.formatTime(now2, 'Y-M-D'),
-          }
-          dateList[i] = obj
-        }
-      } else {
-        //非展开状态，只需要渲染当前周
-        for (let i = 0; i < 7; i++) {
-          const now2 = new Date(now)
-          //当前周的7天
-          now2.setDate(
-            Math.ceil((this.data.selectDay.day + startWeek) / 7) * 7 -
-              6 -
-              startWeek +
-              i
-          )
-          let obj = {}
-          obj = {
-            day: now2.getDate(),
-            month: now2.getMonth() + 1,
-            year: now2.getFullYear(),
-            dateString: this.formatTime(now2, 'Y-M-D'),
-          }
-          dateList[i] = obj
-        }
-      }
-      this.setData({
-        dateList: dateList,
-      })
-    },
-    //一天被点击时
-    selectChange(e) {
-      const year = e.currentTarget.dataset.year
-      const month = e.currentTarget.dataset.month
-      const day = e.currentTarget.dataset.day
-      const dateString = e.currentTarget.dataset.dateString
-      const selectDay = {
-        year: year,
-        month: month,
-        day: day,
-        dateString: dateString,
-      }
-      if (
-        this.data.selectDay.year !== year ||
-        this.data.selectDay.month !== month
-      ) {
-        this.setMonth(year, month, day)
-      } else if (this.data.selectDay.day !== day) {
-        this.setData({
-          selectDay: selectDay,
-        })
-        // this.triggerEvent('change', this.data.selectDay)
-      }
-    },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    app.event.off("punchGoalChange", this.punchGoalChange);
+    app.event.off("punchChange", this.punchChange);
+    app.event.off("login", this.login);
   },
-  lifetimes: {
-    attached() {
-      let now = this.data.defaultTime
-        ? new Date(this.data.defaultTime)
-        : new Date()
-      let selectDay = {
-        year: now.getFullYear(),
-        month: now.getMonth() + 1,
-        day: now.getDate(),
-        dateString: this.formatTime(now, 'Y-M-D'),
-      }
-      this.setMonth(selectDay.year, selectDay.month, selectDay.day)
-    },
-  },
-  observers: {
-    spot: function (spot) {
-      this.setSpot()
-    },
-  },
-})
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {},
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {},
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {},
+});

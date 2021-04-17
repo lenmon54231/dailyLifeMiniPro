@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "LONGLONGAGO",
-  "usingComponents": {}
+  "usingComponents": {
+    "calendar": "/components/calendar/index"
+  }
 }

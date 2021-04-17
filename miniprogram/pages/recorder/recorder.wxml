@@ -1,42 +1,49 @@
-<!-- components/calendar/calendar.wxml -->
-<view class="" hover-class="none" hover-stop-propagation="false">
-    <view class="calendar">
-        <view class="title flex">
-            <view class="flex">
-                <picker value="{{selectDay.year+'-'+selectDay.month}}" bindchange="editMonth" mode="date" fields="month" class="year-month">
-                    {{selectDay.year}}.{{selectDay.month>9?selectDay.month:"0"+selectDay.month}}
-                </picker>
-                <view class="icon" bindtap="lastMonth" style="transform:rotate(180deg);">
-                    <view class="iconfont icon-playfill"></view>
-                </view>
-                <view class="icon" bindtap="nextMonth">
-                    <view class="iconfont icon-playfill"></view>
-                </view>
-            </view>
-            <view catchtap="openChange" class="flex open">
-                <view>{{open?"收起":"展开"}}</view>
-                <view style="margin-left:6rpx;font-size:20rpx" class="iconfont icon-{{open?'fold':'unfold'}}"></view>
-            </view>
-        </view>
-        <!-- 日历头部 -->
-        <view class="flex-around calendar-week">
-            <view class="view">日</view>
-            <view class="view">一</view>
-            <view class="view">二</view>
-            <view class="view">三</view>
-            <view class="view">四</view>
-            <view class="view">五</view>
-            <view class="view">六</view>
-        </view>
-        <!-- 日历主体 -->
-        <view class="flex-start flex-wrap calendar-main" style="height:{{dateList.length/7*72}}rpx">
-            <view wx:for="{{dateList}}" wx:key="dateList" class="day">
-                <view class="bg {{(item.year === selectDay.year && item.month === selectDay.month) ? (item.day === selectDay.day?'select':''): 'other-month'}}" catchtap="selectChange" data-day="{{item.day}}" data-year="{{item.year}}" data-month="{{item.month}}" data-date-string="{{item.dateString}}">
-                    {{item.day}}
-                </view>
-                <view class="spot" wx:if="{{item.spot}}"></view>
-            </view>
-        </view>
-    </view>
-    <view class="" hover-class="none" hover-stop-propagation="false">222222</view>
+<!-- pages/calendar/index.wxml -->
+<view class="top">
+	<view class="top__content">
+		<view class="top__content-date">{{selectDate.month}}月{{selectDate.date}}日</view>
+		<view class="top__content-yearStatus">
+			<view>{{selectDate.year}}年</view>
+			<view class="top__content-yearStatus-suc" wx:if="{{todayPunch.length!==0}}">完成了{{todayPunch.length}}次打卡</view>
+			<view class="top__content-yearStatus-fail" wx:else>当天未打卡</view>
+		</view>
+	</view>
+	<view class="top__today" bindtap="jumpToday">今</view>
 </view>
+<calendar
+ id="calendar"
+ bind:afterTapDate="afterTapDate"
+ bind:whenChangeMonth="whenChangeMonth"
+ dates="{{dates}}"
+></calendar>
+<view class="punchList">
+	<view class="punchList__title">
+		<image src="../../assets/calendar.png" mode="widthFix" />
+		<view>我在这一天</view>
+	</view>
+	<scroll-view
+	 scroll-y="{{true}}"
+	 bindscrolltolower="loadMore"
+	 style="height:{{scrollHeight}}px"
+	 enhanced="{{true}}"
+	 show-scrollbar="{{false}}"
+	 wx:if="{{todayPunch.length!==0}}"
+	>
+		<view
+		 wx:for="{{todayPunch}}"
+		 wx:key="index"
+		 class="punchCard"
+		>
+			<view class="circle"></view>
+			<view class="icon" style="background:{{item.iconBackground}}">
+				<image src="../../assets/icon/{{item.iconName}}.png" mode="widthFix" />
+			</view>
+			<view class="punchCard__content">
+				<view>{{item.goalName}}</view>
+				<view class="punchCard__content-comment">{{item.comment}}</view>
+			</view>
+		</view>
+	</scroll-view>
+	<view class="bottom-tip" wx:if="{{todayPunch.length===0}}">这一天没有完成的打卡哦~</view>
+</view>
+
