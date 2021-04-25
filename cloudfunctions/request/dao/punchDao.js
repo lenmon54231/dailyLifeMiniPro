@@ -1,8 +1,8 @@
-const cloud = require("wx-server-sdk");
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
-const db = cloud.database();
-const collection = db.collection("punch");
-const $ = db.command.aggregate;
+const cloud = require('wx-server-sdk')
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+const db = cloud.database()
+const collection = db.collection('punch')
+const $ = db.command.aggregate
 class punchDao {
   constructor() {}
   createPunch(data) {
@@ -10,12 +10,12 @@ class punchDao {
       collection
         .add({ data: { ...data } })
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
   updatePunch(id, data) {
     return new Promise((resolve, reject) => {
@@ -23,12 +23,12 @@ class punchDao {
         .doc(id)
         .update({ data })
         .then(() => {
-          resolve();
+          resolve()
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   deletePunch(id) {
@@ -37,12 +37,12 @@ class punchDao {
         .doc(id)
         .remove()
         .then(() => {
-          resolve();
+          resolve()
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   deletePunchByGoal(punchGoalId) {
@@ -51,28 +51,28 @@ class punchDao {
         .where({ punchGoalId })
         .remove()
         .then(() => {
-          resolve();
+          resolve()
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
   getPunchList(punchGoalId, page, size) {
     return new Promise(async (resolve, reject) => {
       collection
         .where({ punchGoalId })
-        .orderBy("date", "desc")
+        .orderBy('date', 'desc')
         .skip((page - 1) * size)
         .limit(size)
         .get()
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   getPunchCount(punchGoalId) {
@@ -81,12 +81,12 @@ class punchDao {
         .where({ punchGoalId })
         .count()
         .then((res) => {
-          resolve(res.total);
+          resolve(res.total)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
   getPunchListByMonth(userId, year, month) {
     return new Promise((resolve, reject) => {
@@ -97,28 +97,28 @@ class punchDao {
           date: true,
           punchGoalId: true,
           userId: true,
-          punchYear: $.year("$date"),
-          punchMonth: $.month("$date"),
-          punchDate: $.dayOfMonth("$date"),
+          punchYear: $.year('$date'),
+          punchMonth: $.month('$date'),
+          punchDate: $.dayOfMonth('$date'),
         })
         .match({ userId, punchYear: year, punchMonth: month })
         .group({
-          _id: "$punchDate",
+          _id: '$punchDate',
           list: $.push({
-            _id: "$_id",
-            comment: "$comment",
-            date: "$date",
-            punchGoalId: "$punchGoalId",
+            _id: '$_id',
+            comment: '$comment',
+            date: '$date',
+            punchGoalId: '$punchGoalId',
           }),
         })
         .end()
         .then((res) => {
-          resolve(res.list);
+          resolve(res.list)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   getPunchById(id) {
@@ -127,12 +127,12 @@ class punchDao {
         .doc(id)
         .get()
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   getPunchCountByDate(punchGoalId, date) {
@@ -141,12 +141,12 @@ class punchDao {
         .where({ punchGoalId, date })
         .count()
         .then((res) => {
-          resolve(res.total);
+          resolve(res.total)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 }
-module.exports = punchDao;
+module.exports = punchDao

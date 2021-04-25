@@ -1,9 +1,5 @@
 {
-  "pages": [
-    "pages/mine/mine",
-    "pages/index/index",
-    "pages/recorder/recorder"
-  ],
+  "pages": ["pages/mine/mine", "pages/index/index", "pages/recorder/recorder"],
   "window": {
     "backgroundColor": "#44cef6",
     "backgroundTextStyle": "light",

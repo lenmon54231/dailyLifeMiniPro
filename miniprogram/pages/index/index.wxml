@@ -19,7 +19,7 @@
         </swiper>
     </view>
     <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
-    <view class="quickTab flex_row_center" hover-class="none" hover-stop-propagation="false">
+    <!-- <view class="quickTab flex_row_center" hover-class="none" hover-stop-propagation="false">
         <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
             <view id="demo1" wx:for="{{quickTabList}}" wx:key="index" class="scroll-view-item_H  position_re">
                 <view class="scrolInnerItem position_ab_center" hover-class="none" hover-stop-propagation="false">
@@ -33,7 +33,7 @@
             </view>
         </scroll-view>
     </view>
-    <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
+    <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view> -->
     <view class="titleCon flex_row_between position_re" hover-class="none" hover-stop-propagation="false">
         <!-- <view class="titleIcon" hover-class="none" hover-stop-propagation="false">
             <icon class="t-icon titleIconWidth t-icon-eyu"></icon>
@@ -43,7 +43,7 @@
     </view>
     <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
     <view class="articleList flex_column_around" hover-class="none" hover-stop-propagation="false">
-        <view wx:for="{{taskList}}" wx:key="index" class="articleCon blueBoxShadow" hover-class="none" hover-stop-propagation="false">
+        <view wx:for="{{taskList}}" wx:for-index="index" wx:for-item="item" data-item="{{[item,index]}}" wx:key="index" bindtap="createTarget" class="articleCon blueBoxShadow" hover-class="none" hover-stop-propagation="false">
             <view class="imgCon mb_15" hover-class="none" hover-stop-propagation="false">
                 <image class="artcleImage" src="{{item.url}}" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
             </view>

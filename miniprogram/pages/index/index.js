@@ -1,3 +1,5 @@
+import { fetch } from '../../utils/fetch'
+
 Page({
   onShareAppMessage() {
     return {
@@ -94,5 +96,23 @@ Page({
   },
   scroll(e) {
     console.log(e, '12')
+  },
+  createTarget(e) {
+    console.log(e.currentTarget.dataset.item)
+    let objTem = {
+      date: '21111',
+      allTarget: [
+        { swim: true, date: '222222' },
+        { guitar: true, date: '222222' },
+      ],
+    }
+    objTem.date = new Date()
+    objTem.targetType = e.currentTarget.dataset.item[1]
+    let currentType = e.currentTarget.dataset.item
+    fetch({
+      url: '',
+      methods: 'post',
+      data: objTem,
+    })
   },
 })
