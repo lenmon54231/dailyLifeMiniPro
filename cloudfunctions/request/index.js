@@ -1,6 +1,5 @@
 const cloud = require('wx-server-sdk')
 const TcbRouter = require('tcb-router')
-
 const punchGoalService = require('./service/punchGoalService')
 const punchService = require('./service/punchService')
 const userService = require('./service/userService')
@@ -38,20 +37,17 @@ exports.main = async (event, context) => {
       return
     }
     if (event.method === 'POST') {
-      if (
-        !['date', 'punchGoalId'].every(
-          (item) =>
-            event.data[item] !== '' &&
-            event.data[item] !== null &&
-            event.data[item] !== undefined
-        )
-      ) {
-        ctx.body = { code: 500, msg: '参数错误！' }
-        return
-      }
+      // if (!checkData(event.data)) {
+      //   ctx.body = { code: 500, msg: '参数错误！' }
+      //   return
+      // }
       const userId = cloud.getWXContext().OPENID
-      ctx.body = await punchServices.createPunch({ userId, ...event.data })
-      return
+      return console.log(
+        cloud.getWXContext().OPENID,
+        { userId, ...event.data },
+        '123'
+      )
+      //   ctx.body = await punchServices.createPunch({ userId, ...event.data })
     }
     if (event.method === 'PUT') {
       if (
@@ -84,18 +80,11 @@ exports.main = async (event, context) => {
         ctx.body = { code: 500, msg: '参数错误！' }
         return
       }
-      ctx.body = await punchGoalServices.getPunchGoalList(event.data.userId)
+      ctx.body = await punchGoalServices.getPunchGoalList(event.data)
       return
     }
     if (event.method === 'POST') {
-      const params = [
-        'goalName',
-        'iconName',
-        'punchTimes',
-        'startTime',
-        'iconBackground',
-        'userId',
-      ]
+      const params = ['allTarget', 'date', 'userId']
       if (
         !params.every(
           (item) =>
@@ -111,15 +100,7 @@ exports.main = async (event, context) => {
       return
     }
     if (event.method === 'PUT') {
-      const params = [
-        '_id',
-        'goalName',
-        'iconName',
-        'punchTimes',
-        'startTime',
-        'iconBackground',
-        'userId',
-      ]
+      const params = ['_id', 'userId']
       if (
         !params.every(
           (item) =>

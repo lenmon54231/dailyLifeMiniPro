@@ -1,10 +1,6 @@
-//index.js
 const app = getApp()
 import { fetch } from '../../utils/fetch'
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     hasUserInfo: false,
     canIUseGetUserProfile: false,
@@ -31,14 +27,7 @@ Page({
     requestResult: '',
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl'), // 如需尝试获取用户信息可改为false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    // wx.setNavigationBarTitle({
-    //   title: 'MINE-ZONE',
-    // })
     if (!wx.cloud) {
       wx.redirectTo({
         url: '../chooseLib/chooseLib',
@@ -51,41 +40,6 @@ Page({
       })
     }
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {},
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {},
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
     // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
@@ -134,7 +88,6 @@ Page({
       })
     }
   },
-
   onGetOpenid: function () {
     // 调用云函数
     wx.cloud.callFunction({
@@ -155,7 +108,6 @@ Page({
       },
     })
   },
-
   // 上传图片
   doUpload: function () {
     // 选择图片

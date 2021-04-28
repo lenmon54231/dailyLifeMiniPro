@@ -115,6 +115,9 @@ page {
 .artcleImage {
   width: 640rpx;
 }
+.opacity {
+  opacity: 0.6;
+}
 .articleCon {
   background-color: #fff;
   padding: 25rpx;
@@ -135,4 +138,14 @@ page {
   width: 80rpx;
   height: 40rpx;
   background-repeat: no-repeat;
+}
+.sigleTargetTitleCon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 66rpx;
+  font-weight: 600;
+  color: #fff;
+  z-index: 999;
 }

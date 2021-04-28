@@ -44,15 +44,23 @@
     <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
     <view class="articleList flex_column_around" hover-class="none" hover-stop-propagation="false">
         <view wx:for="{{taskList}}" wx:for-index="index" wx:for-item="item" data-item="{{[item,index]}}" wx:key="index" bindtap="createTarget" class="articleCon blueBoxShadow" hover-class="none" hover-stop-propagation="false">
-            <view class="imgCon mb_15" hover-class="none" hover-stop-propagation="false">
-                <image class="artcleImage" src="{{item.url}}" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
+            <view class="imgCon mb_15 position_re " hover-class="none" hover-stop-propagation="false">
+                <view class="sigleTargetTitleCon flex_row_center" hover-class="none" hover-stop-propagation="false">
+                    <view class="" hover-class="none" hover-stop-propagation="false">
+                        {{item.name}}
+                    </view>
+                    <view wx:if="{{item.disabled}}" class="ml_15" hover-class="none" hover-stop-propagation="false">
+                        <iconfont name="wancheng" />
+                    </view>
+                </view>
+                <image class="artcleImage {{item.disabled ? 'opacity' : ''}}" src="{{item.url}}" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
             </view>
             <view class="ft_size_17 ft_weight_bold mb_15" hover-class="none" hover-stop-propagation="false">
                 {{item.logo}}
             </view>
             <view class="flex_row_between mb_15" hover-class="none" hover-stop-propagation="false">
-                <view>2020.1.1</view>
-                <view>{{item.name}}</view>
+                <!-- <view>{{item.name}}</view> -->
+                <view>{{item.time}}</view>
             </view>
         </view>
     </view>

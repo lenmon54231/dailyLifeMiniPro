@@ -1,6 +1,6 @@
 Component({
   properties: {
-    // jifen | jifen1 | paiming | gate | youbian | youyong | jita | yinle | ziyuan | ziyuan1 | ziyuan2 | ziyuan3 | ziyuan4 | ziyuan5 | ziyuan6 | ziyuan7 | ziyuan8 | ziyuan9 | ziyuan10 | ziyuan11 | ziyuan12 | ziyuan13 | ziyuan14 | ziyuan15 | ziyuan16 | ziyuan17 | ziyuan18 | ziyuan19 | ziyuan20 | ziyuan21 | ziyuan22 | ziyuan23 | eyu
+    // wancheng | jifen | jifen1 | paiming | jifen2 | gate | youbian | youyong | jita | yinle | ziyuan | ziyuan1 | ziyuan2 | ziyuan3 | ziyuan4 | ziyuan5 | ziyuan6 | ziyuan7 | ziyuan8 | ziyuan9 | ziyuan10 | ziyuan11 | ziyuan12 | ziyuan13 | ziyuan14 | ziyuan15 | ziyuan16 | ziyuan17 | ziyuan18 | ziyuan19 | ziyuan20 | ziyuan21 | ziyuan22 | ziyuan23 | eyu
     name: {
       type: String,
     },

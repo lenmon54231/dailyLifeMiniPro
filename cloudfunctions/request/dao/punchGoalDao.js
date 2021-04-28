@@ -1,8 +1,8 @@
-const cloud = require("wx-server-sdk");
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
-const db = cloud.database();
-const collection = db.collection("punchGoal");
-const _ = db.command;
+const cloud = require('wx-server-sdk')
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+const db = cloud.database()
+const collection = db.collection('punchGoal')
+const _ = db.command
 
 class punchGoalDao {
   constructor() {}
@@ -11,12 +11,12 @@ class punchGoalDao {
       collection
         .add({ data })
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
   updatePunchGoal(id, data) {
     return new Promise((resolve, reject) => {
@@ -24,12 +24,12 @@ class punchGoalDao {
         .doc(id)
         .update({ data })
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
   deletePunchGoal(id) {
     return new Promise((resolve, reject) => {
@@ -37,12 +37,12 @@ class punchGoalDao {
         .doc(id)
         .remove()
         .then(() => {
-          resolve();
+          resolve()
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   increaseCount(id) {
@@ -51,12 +51,12 @@ class punchGoalDao {
         .doc(id)
         .update({ data: { count: _.inc(1) } })
         .then(() => {
-          resolve();
+          resolve()
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   decreaseCount(id) {
@@ -65,25 +65,25 @@ class punchGoalDao {
         .doc(id)
         .update({ data: { count: _.inc(-1) } })
         .then(() => {
-          resolve();
+          resolve()
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
-  getPunchGoalList(userId) {
+  getPunchGoalList(data) {
     return new Promise(async (resolve, reject) => {
       collection
-        .where({ userId })
+        .where({ userId: data.userId, date: data.date })
         .get()
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 
   getPunchGoalById(id) {
@@ -92,12 +92,12 @@ class punchGoalDao {
         .doc(id)
         .get()
         .then((res) => {
-          resolve(res.data);
+          resolve(res.data)
         })
         .catch((err) => {
-          reject(err);
-        });
-    });
+          reject(err)
+        })
+    })
   }
 }
-module.exports = punchGoalDao;
+module.exports = punchGoalDao

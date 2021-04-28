@@ -40,6 +40,7 @@
   "appid": "wx0b28346dfb8b5ed5",
   "projectname": "dailyLifeZone",
   "libVersion": "2.14.1",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {
       "list": []

@@ -60,7 +60,7 @@
             </view>
             <view>
                 <view class="width_120rpx flex_row_center">
-                    <icon class="t-icon t-icon-ziyuan3 iconCon"></icon>
+                    <iconfont size="110" name="youyong" />
                 </view>
             </view>
             <view>
