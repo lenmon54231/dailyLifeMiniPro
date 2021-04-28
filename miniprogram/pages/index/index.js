@@ -11,6 +11,7 @@ Page({
   data: {
     userId: app.globalData.userInfo.userId,
     currentTartget: {
+      _id: null,
       userId: app.globalData.userInfo.userId,
       date: formatDate(new Date()),
       allTarget: [],
@@ -104,20 +105,21 @@ Page({
     }).then((res) => {
       if (res.code == '200') {
         let tem = JSON.parse(JSON.stringify(res.data.list))
-        this.data.currentTartget.allTarget = tem[0] ? tem[0].allTarget : []
-        console.log(tem[0].allTarget, '12111')
-        tem[0].allTarget.forEach((e) => {
-          this.data.taskList.forEach((a) => {
-            console.log(e.type == a.type, '32333')
-            if (e.type == a.type) {
-              a.disabled = true
-            }
+        if (tem[0]) {
+          this.data.currentTartget.allTarget = tem[0] ? tem[0].allTarget : []
+          this.data.currentTartget._id = tem[0] ? tem[0]._id : null
+          tem[0].allTarget.forEach((e) => {
+            this.data.taskList.forEach((a) => {
+              console.log(e.type == a.type, '32333')
+              if (e.type == a.type) {
+                a.disabled = true
+              }
+            })
           })
-        })
-        console.log(this.data.taskList, '333333')
-        this.setData({
-          taskList: this.data.taskList,
-        })
+          this.setData({
+            taskList: this.data.taskList,
+          })
+        }
       }
     })
   },
@@ -138,8 +140,6 @@ Page({
     console.log(e, '12')
   },
   createTarget(e) {
-    console.log(e.currentTarget.dataset.item[0], this.data.currentTartget)
-    this.data.currentTartget.allTarget = []
     const { type, name, disabled } = e.currentTarget.dataset.item[0]
     if (disabled) return
     this.data.currentTartget.allTarget.push({
@@ -147,11 +147,15 @@ Page({
       name: name,
       createTime: new Date().getTime(),
     })
-    console.log(this.data.currentTartget, '111')
+    if (!this.data.currentTartget._id) {
+      delete this.data.currentTartget._id
+    }
+    let dataTem = JSON.parse(JSON.stringify(this.data.currentTartget))
+    console.log(dataTem, this.data.currentTartget._id, '1111')
     fetch({
       url: 'punchgoals',
-      method: 'post',
-      data: this.data.currentTartget,
+      method: this.data.currentTartget._id ? 'PUT' : 'POST',
+      data: dataTem,
     }).then((res) => {
       this.innitBC()
       this.getCurrentTarget()

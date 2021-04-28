@@ -19,9 +19,6 @@ class punchGoalService {
   async updatePunchGoal(data) {
     const id = data._id
     delete data._id
-    for (const item of ['date', 'startTime', 'endTime']) {
-      data[item] = data[item] ? new Date(data[item]) : null
-    }
     const res = await this.punchGoalDao.updatePunchGoal(id, data)
     return { code: 200, msg: '修改成功', data: res }
   }
