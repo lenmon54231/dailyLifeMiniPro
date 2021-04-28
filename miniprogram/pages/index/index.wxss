@@ -127,6 +127,7 @@ page {
 }
 .artcleImage {
   border-radius: 8rpx;
+  height: 200rpx;
 }
 .titleIcon {
   position: absolute;

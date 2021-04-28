@@ -6,12 +6,10 @@ class punchGoalService {
     this.punchDao = new punchDao()
     this.punchGoalDao = new punchGoalDao()
   }
-
   async getPunchGoalList(data) {
     const list = await this.punchGoalDao.getPunchGoalList(data)
     return { code: 200, msg: '查询成功', data: { list } }
   }
-
   async createPunchGoal(data) {
     const res = await this.punchGoalDao.createPunchGoal({ ...data })
     return { code: 200, msg: '新增成功', data: res }

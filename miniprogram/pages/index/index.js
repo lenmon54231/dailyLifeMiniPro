@@ -95,6 +95,7 @@ Page({
     })
   },
   getCurrentTarget() {
+    wx.showLoading({})
     fetch({
       url: 'punchgoals',
       method: 'get',
@@ -102,26 +103,30 @@ Page({
         date: formatDate(new Date()),
         userId: this.data.userId,
       },
-    }).then((res) => {
-      if (res.code == '200') {
-        let tem = JSON.parse(JSON.stringify(res.data.list))
-        if (tem[0]) {
-          this.data.currentTartget.allTarget = tem[0] ? tem[0].allTarget : []
-          this.data.currentTartget._id = tem[0] ? tem[0]._id : null
-          tem[0].allTarget.forEach((e) => {
-            this.data.taskList.forEach((a) => {
-              console.log(e.type == a.type, '32333')
-              if (e.type == a.type) {
-                a.disabled = true
-              }
-            })
-          })
-          this.setData({
-            taskList: this.data.taskList,
-          })
-        }
-      }
     })
+      .then((res) => {
+        if (res.code == '200') {
+          let tem = JSON.parse(JSON.stringify(res.data.list))
+          if (tem[0]) {
+            this.data.currentTartget.allTarget = tem[0] ? tem[0].allTarget : []
+            this.data.currentTartget._id = tem[0] ? tem[0]._id : null
+            tem[0].allTarget.forEach((e) => {
+              this.data.taskList.forEach((a) => {
+                console.log(e.type == a.type, '32333')
+                if (e.type == a.type) {
+                  a.disabled = true
+                }
+              })
+            })
+            this.setData({
+              taskList: this.data.taskList,
+            })
+          }
+        }
+      })
+      .finally(() => {
+        wx.hideLoading()
+      })
   },
   getRandomNumberByRange(start, end) {
     return Math.floor(Math.random() * (end - start) + start)
@@ -152,6 +157,7 @@ Page({
     }
     let dataTem = JSON.parse(JSON.stringify(this.data.currentTartget))
     console.log(dataTem, this.data.currentTartget._id, '1111')
+    wx.showLoading({})
     fetch({
       url: 'punchgoals',
       method: this.data.currentTartget._id ? 'PUT' : 'POST',

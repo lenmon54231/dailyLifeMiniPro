@@ -53,7 +53,7 @@
                         <iconfont name="wancheng" />
                     </view>
                 </view>
-                <image class="artcleImage {{item.disabled ? 'opacity' : ''}}" src="{{item.url}}" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
+                <image height="200" class="artcleImage {{item.disabled ? 'opacity' : ''}}" src="{{item.url}}" mode="widthFix" lazy-load="false" binderror="" bindload=""></image>
             </view>
             <view class="ft_size_17 ft_weight_bold mb_15" hover-class="none" hover-stop-propagation="false">
                 {{item.logo}}
