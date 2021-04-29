@@ -3,10 +3,13 @@ const TcbRouter = require('tcb-router')
 const punchGoalService = require('./service/punchGoalService')
 const punchService = require('./service/punchService')
 const userService = require('./service/userService')
+const pointService = require('./service/pointService')
 
 const punchGoalServices = new punchGoalService()
 const punchServices = new punchService()
 const userServices = new userService()
+const pointServices = new pointService()
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   const app = new TcbRouter({ event })
@@ -130,6 +133,51 @@ exports.main = async (event, context) => {
       const userId = cloud.getWXContext().OPENID
       const { userInfo } = event.data
       ctx.body = await userServices.login(userId, userInfo)
+      return
+    }
+  })
+
+  app.router('point', async (ctx, next) => {
+    if (event.method === 'GET') {
+      if (
+        event.data.userId === '' &&
+        event.data.userId === null &&
+        event.data.userId === undefined
+      ) {
+        ctx.body = { code: 500, msg: '参数错误！' }
+        return
+      }
+      ctx.body = await pointServices.getPoint(event.data)
+      return
+    }
+    if (event.method === 'POST') {
+      const params = ['userId', 'type']
+      if (
+        params.every((item) => {
+          event.data[item] !== '' &&
+            event.data[item] !== null &&
+            event.data[item] !== undefined
+        })
+      ) {
+        ctx.body = { code: 500, msg: '参数错误！' }
+        return
+      }
+      ctx.body = await pointServices.createPoint(event.data)
+      return
+    }
+    if (event.method === 'PUT') {
+      const params = ['userId', 'type']
+      if (
+        params.every((item) => {
+          event.data[item] !== '' &&
+            event.data[item] !== null &&
+            event.data[item] !== undefined
+        })
+      ) {
+        ctx.body = { code: 500, msg: '参数错误！' }
+        return
+      }
+      ctx.body = await pointServices.updatePoint(event.data)
       return
     }
   })

@@ -10,12 +10,13 @@
                     </block>
                     <block wx:if="{{!hasUserInfo}}">
                         <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile">
-                            获取头像昵称1
+                            获取头像昵称
                         </button>
                         <button wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo">
                             获取头像昵称
                         </button>
                     </block>
+                    <block wx:else class="ml_25">{{userInfo.nickName}}</block>
                     <!-- <block wx:elif="{{!hasUserInfo}}">
                         <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" size="default"></button>
                         <button wx:else open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" size="default"></button>

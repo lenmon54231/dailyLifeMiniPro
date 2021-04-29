@@ -1,13 +1,13 @@
 <!-- index.wxml -->
 <view class="container">
-    <view class="topSearch flex_row_center" hover-class="none" hover-stop-propagation="false">
+    <!-- <view class="topSearch flex_row_center" hover-class="none" hover-stop-propagation="false">
         <view class="searchInput flex_column_center position_re">
             <input class="" value="" type="text" password="false" placeholder="输入'游泳'试试!" placeholder-style="" placeholder-class="input-placeholder" disabled="false" maxlength="140" focus="false" bindinput="" bindfocus="" bindblur="" bindconfirm=""></input>
             <view class="searchIcon flex_column_center">
                 <icon class="icon-small" type="search" size="36"></icon>
             </view>
         </view>
-    </view>
+    </view> -->
     <view class="swiperCon position_re" hover-class="none" hover-stop-propagation="false">
         <swiper indicator-dots="true" indicator-color="rgba(6, 82, 121, .8)" indicator-active-color='rgba(112, 243, 255, .9)' circular="true" class="swiperInnerCon" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
             <block wx:for="{{background}}" wx:key="*this">
@@ -38,8 +38,8 @@
         <!-- <view class="titleIcon" hover-class="none" hover-stop-propagation="false">
             <icon class="t-icon titleIconWidth t-icon-eyu"></icon>
         </view> -->
-        <view class="pl_40 ft_size_19 ft_weight_bold">每日目标</view>
-        <view class="pr_40">MORE></view>
+        <view class="pl_40 ft_size_19 ft_weight_bold">每日目标(点击图片进行打卡)</view>
+        <!-- <view class="pr_40">MORE></view> -->
     </view>
     <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
     <view class="articleList flex_column_around" hover-class="none" hover-stop-propagation="false">

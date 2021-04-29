@@ -9,6 +9,11 @@ Page({
     }
   },
   data: {
+    pointData: {
+      _id: null,
+      userId: app.globalData.userInfo.userId,
+      type: null,
+    },
     userId: app.globalData.userInfo.userId,
     currentTartget: {
       _id: null,
@@ -61,6 +66,7 @@ Page({
   onLoad: function (options) {
     this.innitBC()
     this.getCurrentTarget()
+    this.getCurrentPoint()
   },
   innitBC() {
     let bcTem = []
@@ -92,6 +98,19 @@ Page({
     console.log(bcTem, '1111111')
     this.setData({
       background: bcTem,
+    })
+  },
+  getCurrentPoint() {
+    fetch({
+      url: 'point',
+      method: 'GET',
+      data: { userId: this.data.userId },
+    }).then((res) => {
+      console.log(res.data.data, '111')
+      if (res.code == '200' && res.data && res.data.data) {
+        this.data.pointData._id =
+          res.data.data.length > 0 ? res.data.data[0]._id : null
+      }
     })
   },
   getCurrentTarget() {
@@ -155,16 +174,33 @@ Page({
     if (!this.data.currentTartget._id) {
       delete this.data.currentTartget._id
     }
+    this.data.pointData.type = type
     let dataTem = JSON.parse(JSON.stringify(this.data.currentTartget))
-    console.log(dataTem, this.data.currentTartget._id, '1111')
+    let pointDataTem = JSON.parse(JSON.stringify(this.data.pointData))
+    console.log(dataTem, pointDataTem, '1111')
+
     wx.showLoading({})
-    fetch({
+    let punchgoalsFetch = fetch({
       url: 'punchgoals',
       method: this.data.currentTartget._id ? 'PUT' : 'POST',
       data: dataTem,
-    }).then((res) => {
-      this.innitBC()
-      this.getCurrentTarget()
     })
+    let pointFetch = fetch({
+      url: 'point',
+      method: this.data.pointData._id ? 'PUT' : 'POST',
+      data: pointDataTem,
+    })
+    this.innitBC()
+    this.getCurrentTarget()
+    this.getCurrentPoint()
+
+    // fetch({
+    //   url: 'punchgoals',
+    //   method: this.data.currentTartget._id ? 'PUT' : 'POST',
+    //   data: dataTem,
+    // }).then((res) => {
+    //   this.innitBC()
+    //   this.getCurrentTarget()
+    // })
   },
 })
