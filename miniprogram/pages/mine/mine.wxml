@@ -40,7 +40,7 @@
                     <div class="rank_icon flex_row_center">
                         <iconfont name="jifen" color="{{['red', 'blue']}}" />
                     </div>
-                    <text class="rank_text">我的积分:100</text>
+                    <text class="rank_text">我的积分:{{currentPoint}}</text>
                 </view>
             </view>
         </view>

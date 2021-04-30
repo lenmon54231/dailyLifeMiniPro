@@ -2,6 +2,8 @@ const app = getApp()
 import { fetch } from '../../utils/fetch'
 Page({
   data: {
+    currentPoint: null,
+    userId: app.globalData.userInfo.userId,
     hasUserInfo: false,
     canIUseGetUserProfile: false,
     punchGoalList: null,
@@ -39,6 +41,7 @@ Page({
         canIUseGetUserProfile: true,
       })
     }
+    this.getCurrentPoint()
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
@@ -77,6 +80,22 @@ Page({
       }
       this.setData({ punchGoalList: res.data.list })
     })
+  },
+  getCurrentPoint() {
+    if (this.data.userId) {
+      fetch({
+        url: 'point',
+        method: 'GET',
+        data: { userId: this.data.userId },
+      }).then((res) => {
+        console.log(res.data.data, '111')
+        if (res.code == '200' && res.data && res.data.data) {
+          this.data.currentPoint =
+            res.data.data.length > 0 ? res.data.data[0].point : null
+        }
+        this.setData({ currentPoint: res.data.data[0].point })
+      })
+    }
   },
   onGetUserInfo: function (e) {
     if (!this.data.logged && e.detail.userInfo) {
