@@ -8,7 +8,7 @@
             </view>
         </view>
     </view> -->
-    <view class="swiperCon position_re" hover-class="none" hover-stop-propagation="false">
+    <!-- <view class="swiperCon position_re" hover-class="none" hover-stop-propagation="false">
         <swiper indicator-dots="true" indicator-color="rgba(6, 82, 121, .8)" indicator-active-color='rgba(112, 243, 255, .9)' circular="true" class="swiperInnerCon" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
             <block wx:for="{{background}}" wx:key="*this">
                 <swiper-item class="swiperItem">
@@ -17,7 +17,7 @@
                 </swiper-item>
             </block>
         </swiper>
-    </view>
+    </view> -->
     <view class="splitBar" hover-class="none" hover-stop-propagation="false"></view>
     <!-- <view class="quickTab flex_row_center" hover-class="none" hover-stop-propagation="false">
         <scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">

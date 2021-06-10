@@ -1,5 +1,10 @@
 {
-  "pages": ["pages/index/index","pages/mine/mine", "pages/recorder/recorder"],
+  "pages": [
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/recorder/recorder",
+    "pages/myTask/myTask"
+  ],
   "window": {
     "backgroundColor": "#44cef6",
     "backgroundTextStyle": "light",

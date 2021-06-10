@@ -30,10 +30,13 @@ Page({
       { name: '出错', icon: 't-icon-ziyuan16' },
       { name: '医疗疾病史', icon: 't-icon-ziyuan13' },
     ],
+    // 为什么乌鸦像写字台
+    // 每一个不曾起舞的日子，都是对生命的辜负
+    // 世界上只有一种真正的英雄主义，那就是看清生活的真相之后，依然热爱生活
     taskList: [
       {
         name: '游泳',
-        logo: '为什么乌鸦像写字台',
+        logo: '',
         url: 'https://limengtupian.oss-cn-beijing.aliyuncs.com/picDemo/ls1.jpg',
         time: formatDate(new Date()),
         type: 1,
@@ -41,7 +44,7 @@ Page({
       },
       {
         name: '吉他',
-        logo: '每一个不曾起舞的日子，都是对生命的辜负',
+        logo: '',
         url: 'https://limengtupian.oss-cn-beijing.aliyuncs.com/picDemo/lg1.jpg',
         time: formatDate(new Date()),
         type: 2,
@@ -49,8 +52,7 @@ Page({
       },
       {
         name: '阅读',
-        logo:
-          '世界上只有一种真正的英雄主义，那就是看清生活的真相之后，依然热爱生活',
+        logo: '',
         url: 'https://limengtupian.oss-cn-beijing.aliyuncs.com/picDemo/lr1.jpg',
         time: formatDate(new Date()),
         type: 3,

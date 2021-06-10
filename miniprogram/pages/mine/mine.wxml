@@ -77,7 +77,7 @@
         </view>
     </view>
     <view class="commonCon taskListCon position_re box_shadow flex_column_around" hover-class="none" hover-stop-propagation="false">
-        <view class="text_align_center flex_row_between width_100 taskListItem">
+        <view class="text_align_center flex_row_between width_100 taskListItem" bindtap="gotoMyTask">
             <view class="flex_row_start" hover-class="none" hover-stop-propagation="false">
                 <icon class="t-icon t-icon-ziyuan6 widthIconCon"></icon>
                 <view class="ml_25" hover-class="none" hover-stop-propagation="false">我的任务</view>

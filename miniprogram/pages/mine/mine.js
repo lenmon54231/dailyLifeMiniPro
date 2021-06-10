@@ -174,4 +174,10 @@ Page({
       },
     })
   },
+  gotoMyTask: function () {
+    console.log('1')
+    wx.navigateTo({
+      url: '../myTask/myTask',
+    })
+  },
 })
